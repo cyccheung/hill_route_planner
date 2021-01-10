@@ -1,0 +1,104 @@
+/*
+    A node object represents one location on the map
+    Will be travelling between adjacent nodes in the map
+*/
+
+#include <limits>
+#include <utility>
+
+class Node {
+public:
+    // Constructor - Called when Node object is created
+    Node(int altitudeIn, int idIn) {
+        altitude = altitudeIn;
+        id = idIn;
+        gCost = std::numeric_limits<int>::max();    // Initialize gCost to get to node as very large number
+        cost = std::numeric_limits<int>::max();     // Initialize cost to get to node as very large number
+        parent = nullptr;                           // Don't know which node leads here
+        visited = false;
+        addedToUnvisited = false;
+    }
+
+    // Destructor - Called when Node object goes out of scope
+    // Can be empty
+    ~Node();
+
+    // Calculates x and y position of node
+    std::pair<int,int> getPosition(int MAPWIDTH) {
+        return std::make_pair(id % MAPWIDTH, id / MAPWIDTH);
+    }
+
+    // Returns altitude
+    int getAltitude() {
+        return altitude;
+    }
+
+    // Returns gCost
+    int getGCost() {
+        return gCost;
+    }
+
+    // Sets gCost
+    void setGCost(int gCostIn) {
+        gCost = gCostIn;
+    }
+
+    // Returns cost
+    int getCost() {
+        return cost;
+    }
+
+    // Sets cost to get to this node
+    void setCost(int costIn) {
+        cost = costIn;
+    }
+
+    // Get node ID
+    int getID() {
+        return id;
+    }
+
+    // Set node ID
+    void setID(int idIn) {
+        id = idIn;
+    }
+
+    // Get parent
+    Node* getParent() {
+        return parent;
+    }
+
+    // Set parent
+    void setParent(Node* parentIn) {
+        parent = parentIn;
+    }
+
+    // Get visited status
+    bool getVisited() {
+        return visited;
+    }
+
+    // Set visited status
+    bool setVisited(bool visitedIn) {
+        visited = visitedIn;
+    }
+
+    // Get addedToUnvisited status
+    bool getAddedToUnvisited() {
+        return addedToUnvisited;
+    }
+
+    // Set addedToUnvisited status
+    bool setAddedToUnvisited(bool addedToUnvisitedIn) {
+        addedToUnvisited = addedToUnvisitedIn;
+    }
+
+private:
+    int altitude;
+    int gCost;
+    int cost;
+    int id;
+    Node* parent;
+    bool visited;
+    bool addedToUnvisited;
+};

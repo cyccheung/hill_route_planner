@@ -2,6 +2,12 @@
 # Prints out the map in the following format:
 # MAPHEIGHT
 # MAPWIDTH
+# STARTX
+# STARTY
+# DESTINATIONX
+# DESTINATIONY
+# ALTITUDESTEP Lower bound
+# ALTITUDESTEP Upper bound
 # row 0, col 0
 # row 0, col 1
 # ...
@@ -14,7 +20,9 @@ MAPWIDTH = 10
 MAPHEIGHT = 10
 ALTITUDESTEP = (-4, 8)
 STARTPOINT = (5, 6)
+DESTINATION = (8, 1)
 STARTALTITUDE = 300
+map = []
 
 # Generates a random altitude for input row and column given altitude from source
 # Then recursively works on adjacent cells
@@ -33,8 +41,7 @@ def printMap(map):
             print(map[i][j])
 
 if __name__ == "__main__":
-    if STARTPOINT[0] >= 0 and STARTPOINT[0] < MAPHEIGHT and STARTPOINT[1] < MAPWIDTH and STARTPOINT[1] >= 0:
-        map = []
+    if 0 <= STARTPOINT[0] < MAPWIDTH and 0 <= STARTPOINT[1] < MAPHEIGHT and 0 <= DESTINATION[0] < MAPWIDTH and 0 <= DESTINATION[1] < MAPHEIGHT:
         for latitude in range(MAPHEIGHT):
             tempRow = []
             for longitude in range(MAPWIDTH):
@@ -44,6 +51,12 @@ if __name__ == "__main__":
         generateRandomAltitude(STARTALTITUDE, STARTPOINT[0], STARTPOINT[1])
         print(MAPHEIGHT)
         print(MAPWIDTH)
+        print(STARTPOINT[0])
+        print(STARTPOINT[1])
+        print(DESTINATION[0])
+        print(DESTINATION[1])
+        print(ALTITUDESTEP[0])
+        print(ALTITUDESTEP[1])
         printMap(map)
     else:
         print("Start point out of range")
