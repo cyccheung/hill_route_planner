@@ -24,8 +24,8 @@ public:
     // Returns if path is found
     bool aStar(std::vector<Node> &map);
 
-    // Plans route using greedy planner
-    void greedy();
+    // Backtracks from input node to start node
+    void backtrack(std::vector<int> &path);
 
 private:
     // Calculate cost to get from start node to node

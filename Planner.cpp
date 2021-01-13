@@ -11,6 +11,7 @@ Planner::Planner(Node* startNodePtr, Node* destinationNodePtr, int MAPHEIGHTIN, 
 
 bool Planner::aStar(std::vector<Node> &map) {
     Node* currentNode = startNode;
+    currentNode->setVisited(true);
     // Keep searching as long as there are nodes left to visit
     while(!unvisited.empty()) {
         // Add adjacent nodes to unvisited
@@ -20,13 +21,25 @@ bool Planner::aStar(std::vector<Node> &map) {
         // Take the node with the lowest cost as next current
         currentNode = unvisited.top();
         unvisited.pop();
+        // If we have reached the goal, return
+        if(currentNode == destinationNode) {
+            return true;
+        }
     }
     // If unvisited PQ is empty before destination is found, then there is no path from start to destination
     return false;
 }
 
-void Planner::greedy() {
-
+void Planner::backtrack(std::vector<int> &path) {
+    Node* tempNodePtr;
+    int debugIterations = 0;
+    // Keep backtracking until we reach the start
+    while(tempNodePtr != startNode && debugIterations < 1000) {
+        path.push_back(tempNodePtr->getID());
+        tempNodePtr = tempNodePtr->getParent();
+        debugIterations++;
+    }
+    path.push_back(tempNodePtr->getID());   // Add start node to path
 }
 
 double Planner::calculateGCost(Node* node, Node* parentNode) {
@@ -68,6 +81,7 @@ void Planner::addAdjacent(std::vector<Node> &map, Node* currentNode, int MAPHEIG
         int updatedCost = calculateGCost(&map[adjacentIDs[i]], currentNode) + calculateHCost(&map[adjacentIDs[i]]);
         // If cost from going to this node is lower than previously found cost, update the cost
         if(updatedCost < map[adjacentIDs[i]].getCost()) {
+            map[adjacentIDs[i]].setGCost(calculateGCost(&map[adjacentIDs[i]], currentNode));
             map[adjacentIDs[i]].setCost(updatedCost);
         }
         // Only add if not a water tile (altitude >= 0) and tile is not visited and not already in unvisited

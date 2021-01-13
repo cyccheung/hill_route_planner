@@ -36,7 +36,18 @@ int main() {
         return 1;
     }
 
-    // TODO: Find optimal path and set the parent nodes appropriately
-    // TODO: Bactrack from goal node and output optimal path to optimalpath file
+    // Find optimal path and set the parent nodes appropriately
+    Planner planner(&map[STARTY * MAPWIDTH + STARTX], &map[DESTINATIONY * MAPWIDTH + DESTINATIONX], MAPHEIGHT, MAPWIDTH);
+    planner.aStar(map);
+    // Bactrack from goal node and output optimal path to optimalpath file
+    std::vector<int> path;
+    planner.backtrack(path);
+    // Output path into optimalpath file
+    std::ofstream optimalPath;
+    optimalPath.open("optimalpath");
+    for(int i = 0; i < path.size(); ++i) {
+        optimalPath << path[i] << ",";
+    }
+    optimalPath.close();
     return 0;
 }
