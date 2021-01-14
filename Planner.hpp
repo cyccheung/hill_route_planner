@@ -2,6 +2,9 @@
     Object to plan the route
 */
 
+#ifndef PLANNER_HPP
+#define PLANNER_HPP
+
 #include <queue>
 #include <vector>
 #include "Node.hpp"
@@ -53,3 +56,5 @@ private:
     int ALTITUDESTEPLOWER;
     int ALTITUDESTEPUPPER;
 };
+
+#endif

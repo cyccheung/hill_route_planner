@@ -64,7 +64,7 @@ void Planner::addAdjacent(std::vector<Node> &map, Node* currentNode, int MAPHEIG
         adjacentIDs.push_back(currentNode->getID() - MAPWIDTH);  
     }
     // South
-    if(currentNode->getID() + MAPWIDTH < map.size()) {
+    if(currentNode->getID() + MAPWIDTH < (int)map.size()) {
         adjacentIDs.push_back(currentNode->getID() + MAPWIDTH);  
     }
     // East
@@ -77,7 +77,7 @@ void Planner::addAdjacent(std::vector<Node> &map, Node* currentNode, int MAPHEIG
     }
 
     // Add all adjacent nodes using their IDs
-    for(int i = 0; i < adjacentIDs.size(); ++i) {
+    for(int i = 0; i < (int)adjacentIDs.size(); ++i) {
         int updatedCost = calculateGCost(&map[adjacentIDs[i]], currentNode) + calculateHCost(&map[adjacentIDs[i]]);
         // If cost from going to this node is lower than previously found cost, update the cost
         if(updatedCost < map[adjacentIDs[i]].getCost()) {

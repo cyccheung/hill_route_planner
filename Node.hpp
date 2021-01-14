@@ -3,6 +3,9 @@
     Will be travelling between adjacent nodes in the map
 */
 
+#ifndef NODE_HPP
+#define NODE_HPP
+
 #include <limits>
 #include <utility>
 
@@ -18,10 +21,6 @@ public:
         visited = false;
         addedToUnvisited = false;
     }
-
-    // Destructor - Called when Node object goes out of scope
-    // Can be empty
-    ~Node();
 
     // Calculates x and y position of node
     std::pair<int,int> getPosition(int MAPWIDTH) {
@@ -79,7 +78,7 @@ public:
     }
 
     // Set visited status
-    bool setVisited(bool visitedIn) {
+    void setVisited(bool visitedIn) {
         visited = visitedIn;
     }
 
@@ -89,7 +88,7 @@ public:
     }
 
     // Set addedToUnvisited status
-    bool setAddedToUnvisited(bool addedToUnvisitedIn) {
+    void setAddedToUnvisited(bool addedToUnvisitedIn) {
         addedToUnvisited = addedToUnvisitedIn;
     }
 
@@ -102,3 +101,5 @@ private:
     bool visited;
     bool addedToUnvisited;
 };
+
+#endif

@@ -25,9 +25,11 @@ int main() {
                     DESTINATIONX >> DESTINATIONY >> 
                     ALTITUDESTEPLOWER >> ALTITUDESTEPUPPER;
         int tempAltitude;
+        int tempID = 0;
         while(hilldata >> tempAltitude) {
-            Node tempNode(tempAltitude);
+            Node tempNode(tempAltitude, tempID);
             map.push_back(tempNode);
+            tempID++;
         }
         hilldata.close();
     }
@@ -38,14 +40,17 @@ int main() {
 
     // Find optimal path and set the parent nodes appropriately
     Planner planner(&map[STARTY * MAPWIDTH + STARTX], &map[DESTINATIONY * MAPWIDTH + DESTINATIONX], MAPHEIGHT, MAPWIDTH);
+    std::cout << "Running A*...\n";
     planner.aStar(map);
     // Bactrack from goal node and output optimal path to optimalpath file
     std::vector<int> path;
+    std::cout << "Backtracking...\n";
     planner.backtrack(path);
     // Output path into optimalpath file
+    std::cout << "Generating optimalpath..." << std::endl;
     std::ofstream optimalPath;
     optimalPath.open("optimalpath");
-    for(int i = 0; i < path.size(); ++i) {
+    for(int i = 0; i < (int)path.size(); ++i) {
         optimalPath << path[i] << ",";
     }
     optimalPath.close();

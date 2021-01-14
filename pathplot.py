@@ -13,38 +13,39 @@ destination = []
 map = []
 path = []
 
+# Read in map data
 print("Reading hilldata...")
 mapFile = open("hilldata", "r")
 mapContent = mapFile.read()
-map = mapContent.split(",")
+map = mapContent.split("\n")
 mapFile.close()
+map.remove('')
+map = [int(i) for i in map]
 
+# Get details from map data
+MAPHEIGHT = map[0]
+MAPWIDTH = map[1]
+STARTX = map[2]
+STARTY = map[3]
+DESTINATIONX = map[4]
+DESTINATIONY = map[5]
+ALTITUDESTEPLOWER = map[6]
+ALTITUDESTEPUPPER = map[7]
+
+# Read in path data
 print("Reading optimalpath...")
 pathFile = open("optimalpath", "r")
 pathContent = pathFile.read()
-path = pathContent.split(",")
+path = pathContent.split("\n")
 pathFile.close()
 
+# Plot 3D surface of map
+X, Y = np.meshgrid(np.arange(MAPWIDTH), np.arange(MAPHEIGHT))
 fig = plt.figure()
-ax = fig.gca(projection='3d')
-
-# Make data.
-X = np.arange(0, 5, 0.25)
-Y = np.arange(0, 5, 0.25)
-X, Y = np.meshgrid(X, Y)
-R = np.sqrt(X**2 + Y**2)
-Z = np.sin(R)
-
-# Plot the surface.
-surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
-                       linewidth=0, antialiased=False)
-
-# Customize the z axis.
-ax.set_zlim(-1.01, 1.01)
-ax.zaxis.set_major_locator(LinearLocator(10))
-ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
-
-# Add a color bar which maps values to colors.
-fig.colorbar(surf, shrink=0.5, aspect=5)
-
+ax = fig.add_subplot(1,1,1, projection='3d')
+Z = np.reshape(np.array(map[8:]), (MAPWIDTH, MAPHEIGHT))
+ax.plot_surface(X, Y, Z)
 plt.show()
+
+# TODO: Plot start and destination
+# TODO: Plot optimal route

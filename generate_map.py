@@ -16,11 +16,11 @@
 import random 
 
 # Dimensions of map to generate
-MAPWIDTH = 10
-MAPHEIGHT = 10
+MAPWIDTH = 5
+MAPHEIGHT = 5
 ALTITUDESTEP = (-4, 8)
-STARTPOINT = (5, 6)
-DESTINATION = (8, 1)
+STARTPOINT = (2, 2)
+DESTINATION = (4, 4)
 STARTALTITUDE = 300
 map = []
 
