@@ -8,6 +8,7 @@
 
 #include <limits>
 #include <utility>
+#include <iostream>
 
 class Node {
 public:
@@ -90,6 +91,16 @@ public:
     // Set addedToUnvisited status
     void setAddedToUnvisited(bool addedToUnvisitedIn) {
         addedToUnvisited = addedToUnvisitedIn;
+    }
+
+    // Print out node details
+    void print() {
+        if(parent == nullptr) {
+            std::cout << "Node " << id << " from Node null at " << altitude << "\n";
+        }
+        else {
+            std::cout << "Node " << id << " from Node " << parent->getID() << " at " << altitude << "\n";
+        }
     }
 
 private:

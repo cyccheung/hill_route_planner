@@ -16,8 +16,6 @@ bool Planner::aStar(std::vector<Node> &map) {
     while(!unvisited.empty()) {
         // Add adjacent nodes to unvisited
         addAdjacent(map, currentNode, MAPHEIGHT, MAPWIDTH);
-        // Set the next node's parent as the current node
-        unvisited.top()->setParent(currentNode);
         // Take the node with the lowest cost as next current
         currentNode = unvisited.top();
         unvisited.pop();
@@ -31,7 +29,7 @@ bool Planner::aStar(std::vector<Node> &map) {
 }
 
 void Planner::backtrack(std::vector<int> &path) {
-    Node* tempNodePtr;
+    Node* tempNodePtr = destinationNode;
     int debugIterations = 0;
     // Keep backtracking until we reach the start
     while(tempNodePtr != startNode && debugIterations < 1000) {
@@ -83,6 +81,7 @@ void Planner::addAdjacent(std::vector<Node> &map, Node* currentNode, int MAPHEIG
         if(updatedCost < map[adjacentIDs[i]].getCost()) {
             map[adjacentIDs[i]].setGCost(calculateGCost(&map[adjacentIDs[i]], currentNode));
             map[adjacentIDs[i]].setCost(updatedCost);
+            map[adjacentIDs[i]].setParent(currentNode);
         }
         // Only add if not a water tile (altitude >= 0) and tile is not visited and not already in unvisited
         if( map[adjacentIDs[i]].getAltitude() >= 0 && 

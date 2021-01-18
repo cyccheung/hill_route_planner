@@ -15,11 +15,11 @@ import random
 from perlin_noise import PerlinNoise
 
 # Dimensions of map to generate
-MAPWIDTH = 10
-MAPHEIGHT = 10
-STARTPOINT = (5, 7)
-DESTINATION = (8, 5)
-RANDOMSEED = 2
+MAPWIDTH = 30
+MAPHEIGHT = 30
+STARTPOINT = (1, 10)
+DESTINATION = (25, 20)
+RANDOMSEED = 7
 ALTITUDEOFFSET = 100
 map = []
 

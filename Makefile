@@ -25,6 +25,6 @@ generate: $(HILLGENERATE)
 	python $(HILLGENERATE) > $(HILLDATA)
 
 clean:
-	rm $(EXEC)
+	rm $(EXEC) $(HILLDATA) $(OPTIMALPATH)
 
 .PHONY: clean
