@@ -11,6 +11,8 @@ Planner::Planner(Node* startNodePtr, Node* destinationNodePtr, int MAPHEIGHTIN, 
 
 bool Planner::aStar(std::vector<Node> &map) {
     Node* currentNode = startNode;
+    currentNode->setGCost(0);
+    currentNode->setCost(0);
     currentNode->setVisited(true);
     // Keep searching as long as there are nodes left to visit
     while(!unvisited.empty()) {
@@ -42,9 +44,9 @@ void Planner::backtrack(std::vector<int> &path) {
 
 double Planner::calculateGCost(Node* node, Node* parentNode) {
     int altitudeDifference = node->getAltitude() - parentNode->getAltitude();
-    int tempEffort = pow(altitudeDifference, 2);
+    int tempEffort = abs(pow(abs(altitudeDifference), 0.25));
     if(altitudeDifference > 0) {
-        tempEffort *= 10;
+        tempEffort *= 2;
     }
     return tempEffort + parentNode->getGCost();
 }
