@@ -6,57 +6,39 @@
 # STARTY
 # DESTINATIONX
 # DESTINATIONY
-# ALTITUDESTEP Lower bound
-# ALTITUDESTEP Upper bound
 # row 0, col 0
 # row 0, col 1
 # ...
 # row MAPHEIGHT - 1, col MAPWIDTH - 1
 
 import random 
+from perlin_noise import PerlinNoise
 
 # Dimensions of map to generate
-MAPWIDTH = 5
-MAPHEIGHT = 5
-ALTITUDESTEP = (-4, 8)
+MAPWIDTH = 50
+MAPHEIGHT = 50
 STARTPOINT = (2, 2)
-DESTINATION = (4, 4)
-STARTALTITUDE = 300
+DESTINATION = (26, 26)
+RANDOMSEED = 2
+ALTITUDEOFFSET = 100
 map = []
-
-# Generates a random altitude for input row and column given altitude from source
-# Then recursively works on adjacent cells
-def generateRandomAltitude(sourceAltitude, row, col):
-    if row >= 0 and row < MAPHEIGHT and col >= 0 and col < MAPWIDTH:
-        if map[row][col] is None:
-            map[row][col] = sourceAltitude + random.randint(ALTITUDESTEP[0], ALTITUDESTEP[1])
-            generateRandomAltitude(map[row][col], row - 1, col) # Up
-            generateRandomAltitude(map[row][col], row + 1, col) # Down
-            generateRandomAltitude(map[row][col], row, col - 1) # Left
-            generateRandomAltitude(map[row][col], row, col + 1) # Right
 
 def printMap(map):
     for i in range(MAPHEIGHT):
         for j in range(MAPWIDTH):
-            print(map[i][j])
+            print(int((map[i][j] * 1000.0)) + ALTITUDEOFFSET)
 
 if __name__ == "__main__":
-    if 0 <= STARTPOINT[0] < MAPWIDTH and 0 <= STARTPOINT[1] < MAPHEIGHT and 0 <= DESTINATION[0] < MAPWIDTH and 0 <= DESTINATION[1] < MAPHEIGHT:
-        for latitude in range(MAPHEIGHT):
-            tempRow = []
-            for longitude in range(MAPWIDTH):
-                tempRow.append(None)
-            map.append(tempRow)
-        # print(map)
-        generateRandomAltitude(STARTALTITUDE, STARTPOINT[0], STARTPOINT[1])
-        print(MAPHEIGHT)
-        print(MAPWIDTH)
-        print(STARTPOINT[0])
-        print(STARTPOINT[1])
-        print(DESTINATION[0])
-        print(DESTINATION[1])
-        print(ALTITUDESTEP[0])
-        print(ALTITUDESTEP[1])
+    print(MAPHEIGHT)
+    print(MAPWIDTH)
+    print(STARTPOINT[0])
+    print(STARTPOINT[1])
+    print(DESTINATION[0])
+    print(DESTINATION[1])
+    if 0 <= DESTINATION[0] < MAPWIDTH and 0 <= DESTINATION[1] < MAPHEIGHT and 0 <= STARTPOINT[0] < MAPWIDTH and 0 <= STARTPOINT[1] < MAPHEIGHT:
+        noise = PerlinNoise(octaves=2, seed=RANDOMSEED)
+        xpix, ypix = MAPWIDTH, MAPHEIGHT
+        map = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
         printMap(map)
     else:
         print("Start point out of range")

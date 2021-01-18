@@ -21,6 +21,7 @@ map = mapContent.split("\n")
 mapFile.close()
 map.remove('')
 map = [int(i) for i in map]
+# print(map)
 
 # Get details from map data
 MAPHEIGHT = map[0]
@@ -29,8 +30,6 @@ STARTX = map[2]
 STARTY = map[3]
 DESTINATIONX = map[4]
 DESTINATIONY = map[5]
-ALTITUDESTEPLOWER = map[6]
-ALTITUDESTEPUPPER = map[7]
 
 # Read in path data
 print("Reading optimalpath...")
@@ -43,9 +42,16 @@ pathFile.close()
 X, Y = np.meshgrid(np.arange(MAPWIDTH), np.arange(MAPHEIGHT))
 fig = plt.figure()
 ax = fig.add_subplot(1,1,1, projection='3d')
-Z = np.reshape(np.array(map[8:]), (MAPWIDTH, MAPHEIGHT))
-ax.plot_surface(X, Y, Z)
-plt.show()
+Z = np.reshape(np.array(map[6:]), (MAPWIDTH, MAPHEIGHT))
+ax.plot_surface(X, Y, Z, color='g')
 
 # TODO: Plot start and destination
+pointsX = np.array([STARTX, DESTINATIONX])
+pointsY = np.array([STARTY, DESTINATIONY])
+pointsZ = np.array([map[STARTY * MAPWIDTH + STARTX] + 10, map[DESTINATIONY * MAPWIDTH + DESTINATIONX] + 10])
+print(pointsX)
+print(pointsY)
+print(pointsZ)
+ax.scatter(pointsX, pointsY, pointsZ, color='r', s=50)
 # TODO: Plot optimal route
+plt.show()
