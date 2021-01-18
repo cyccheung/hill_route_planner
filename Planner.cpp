@@ -54,7 +54,7 @@ double Planner::calculateGCost(Node* node, Node* parentNode) {
 double Planner::calculateHCost(Node* node) {
     std::pair<int,int> destinationPos = destinationNode->getPosition(MAPWIDTH);
     std::pair<int,int> nodePos = node->getPosition(MAPWIDTH);
-    return 10 * ALTITUDESTEPUPPER * sqrt(pow(destinationPos.first - nodePos.first, 2) + pow(destinationPos.second - nodePos.second, 2));
+    return 50 * sqrt(pow(destinationPos.first - nodePos.first, 2) + pow(destinationPos.second - nodePos.second, 2));
 }
 
 void Planner::addAdjacent(std::vector<Node> &map, Node* currentNode, int MAPHEIGHT, int MAPWIDTH) {

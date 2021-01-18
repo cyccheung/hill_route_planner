@@ -18,8 +18,8 @@ from perlin_noise import PerlinNoise
 MAPWIDTH = 30
 MAPHEIGHT = 30
 STARTPOINT = (1, 10)
-DESTINATION = (25, 25)
-RANDOMSEED = 8
+DESTINATION = (25, 15)
+RANDOMSEED = 9
 ALTITUDEOFFSET = 100
 map = []
 
